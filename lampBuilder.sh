@@ -14,18 +14,34 @@ wget -O /tmp/jcameron-key.asc http://www.webmin.com/jcameron-key.asc
 apt-key add /tmp/jcameron-key.asc
 rm /tmp/jcameron-key.asc
 
+# add dotdeb php5 packages
+echo -e "deb http://packages.dotdeb.org squeeze all\ndeb-src http://packages.dotdeb.org squeeze all\n" > /tmp/dotdeb.list
+cp /tmp/dotdeb.list /etc/apt/sources.list.d/
+rm /tmp/dotdeb.list
+
+#add apt-get key for dotdeb
+wget -O /tmp/dotdeb.gpg http://www.dotdeb.org/dotdeb.gpg
+cat /tmp/dotdeb.gpg | apt-key add -
+
 # run apt-get update and upgrade
 apt-get update
 apt-get -y upgrade
 
 # install relevant servers and programs
-apt-get -y install apache2 php5 php5-cgi mysql-server mysql-client apache2-mpm-itk postfix proftpd alpine git mercurial unzip
+apt-get -y install apache2 php5 php5-cgi php-pear  mysql-server mysql-client apache2-mpm-itk postfix proftpd alpine git mercurial unzip
+
+# setup PEAR Mail for oler sites
+pear install mail
+pear install Net_SMTP
+pear install Auth_SASL
+pear install mail_mime
 
 # install webmin
 apt-get -y install webmin
 
 # modify apache to use php as a CGI script (http://library.linode.com/web-servers/apache/php-cgi/ubuntu-12.04-precise-pangolin)
 a2enmod actions
+a2enmod vhost_alias
 
 # write php-cgi directives to php-cgi.conf and copy it to /etc/apache2/conf.d/ folder
 echo -e "ScriptAlias /local-bin /usr/bin\nAddHandler application/x-httpd-php5 php\nAction application/x-httpd-php5 /local-bin/php-cgi\n" >/tmp/php-cgi.conf
