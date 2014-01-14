@@ -28,7 +28,7 @@ apt-get update
 apt-get -y upgrade
 
 # install relevant servers and programs
-apt-get -y install apache2 php5 php5-cgi php-pear  mysql-server mysql-client apache2-mpm-itk postfix proftpd alpine git mercurial unzip
+apt-get -y install apache2 php5 php5-cgi php-pear php5-gd mysql-server mysql-client apache2-mpm-itk postfix proftpd alpine git mercurial unzip
 
 # setup PEAR Mail for oler sites
 pear install mail
