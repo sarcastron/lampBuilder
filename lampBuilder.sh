@@ -30,7 +30,7 @@ apt-get -y upgrade
 # install relevant servers and programs
 apt-get -y install apache2 php5 php5-cgi php-pear php5-gd mysql-server mysql-client apache2-mpm-itk postfix proftpd alpine git mercurial unzip
 
-# setup PEAR Mail for oler sites
+# setup PEAR Mail for older sites
 pear install mail
 pear install Net_SMTP
 pear install Auth_SASL
@@ -92,7 +92,7 @@ if [[ ADMINCOUNT > 0 ]]; then
 	echo -e "It appears you created $ADMINCOUNT user(s). Since you have done this, it is advised that you disable root access to the SSH server\n#### WARNING ####\nIf you do this, make sure that you have an admin user setup with sudo access."
 	read -p "Would you like to disable root access now? [y/N] " DISABLEROOT
 	if [[ $DISABLEROOT =~ ^[yY]$ ]]; then
-		echo -e "OK. I can open the file for you, but you'll have to edit it. In order to do this find the line option \nPermitRootLogin\nuncomment it if it is commented out and set it's value to 'no'"
+		echo -e "OK. I can open the file for you, but you'll have to edit it. In order to do this find the line option \nPermitRootLogin\nuncomment it if commented out and set it's value to 'no'"
 		read -p "Press the enter key when ready."
 		
 		# open the editor
